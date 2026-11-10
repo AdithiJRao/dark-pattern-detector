@@ -60,7 +60,7 @@ The hold-out set comes from the same dataset as the training data, so these numb
 
 Works in Chrome, Edge and Brave on a laptop or desktop.
 
-1. Download `dark-pattern-extension.zip` from the [live page](https://adithijrao.github.io/dark-pattern-detector/) or from the `docs/` folder.
+1. Download `dark-pattern-extension.zip` from the (https://adithijrao.github.io/dark-pattern-detector/) or from the `docs/` folder.
 2. Extract it to a folder you will keep. Deleting the folder removes the extension.
 3. Open `chrome://extensions` (or `edge://extensions`) and turn on **Developer mode**.
 4. Click **Load unpacked** and select the extracted folder, the one containing `manifest.json`.
