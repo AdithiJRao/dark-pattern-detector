@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dark Pattern Detector – Chrome extension</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav><span>Dark Pattern Detector</span><a href="#install">Install</a></nav>
+
+  <header class="hero">
+    <div>
+      <h1>See the pressure tactics before they work on you.</h1>
+      <p class="lead">A Chrome extension that reads the text on shopping sites and puts a red outline around wording built to rush you, like “Only 2 left!” or “15 people are viewing this.”</p>
+      <div class="btns">
+        <a class="btn main" href="dark-pattern-extension.zip" download>Download extension (.zip)</a>
+        <a class="btn alt" href="#install">How to install</a>
+      </div>
+      <p class="note">Free. Works in Chrome, Edge and Brave on a laptop or desktop.</p>
+    </div>
+
+    <div class="demo on" id="demo" aria-label="Interactive example">
+      <div class="demo-bar">
+        <span>Example product listing</span>
+        <button class="toggle" id="t" aria-pressed="true">Detector on</button>
+      </div>
+      <div class="item"><div class="thumb"></div><div>
+        <h3>Wireless earbuds, black</h3><span class="price">₹1,299</span><br>
+        <span class="tag dp">Only 2 left in stock!</span><span class="tag">Free delivery</span>
+      </div></div>
+      <div class="item"><div class="thumb"></div><div>
+        <h3>Cotton t-shirt, navy</h3><span class="price">₹499</span><br>
+        <span class="tag dp">15 people are viewing this right now</span><span class="tag">Pack of 1</span>
+      </div></div>
+      <div class="item"><div class="thumb"></div><div>
+        <h3>Running shoes</h3><span class="price">₹2,799</span><br>
+        <span class="tag dp">Hurry, offer ends in 10 minutes</span><span class="tag">Size guide</span>
+      </div></div>
+      <div class="count" id="c" aria-live="polite">3 pressure tactics flagged</div>
+    </div>
+  </header>
+
+  <section id="install">
+    <h2>Install in a minute</h2>
+    <p class="sub">Works in Edge, Chrome and Brave. You load it once, and it stays installed.</p>
+    <ol class="steps">
+      <li><strong>Download and extract.</strong> Click <strong>Download extension</strong> above, open the zip, click <strong>Extract all</strong>, and save the folder somewhere permanent, such as Documents. Deleting the folder later removes the extension.</li>
+      <li><strong>Open the extensions page.</strong> In Edge, type <code>edge://extensions</code> in the address bar. In Chrome or Brave, type <code>chrome://extensions</code>. Then turn on <strong>Developer mode</strong>.</li>
+      <li><strong>Click Load unpacked</strong> and select the extracted folder, the one containing <code>manifest.json</code>.</li>
+      <li><strong>Open any shopping site.</strong> Flagged text gets a red outline, and the extension icon shows how many.</li>
+    </ol>
+    <p class="note">Nothing to run and no sign-up. It works offline.</p>
+  </section>
+
+  <section>
+    <h2>What it catches, and what it doesn’t</h2>
+    <p class="sub">It is a text classifier, so it judges wording only.</p>
+    <div class="cols">
+      <div class="panel">
+        <h3>Flags</h3>
+        <ul class="plain">
+          <li>Scarcity: “Only 3 left”, “Almost gone”</li>
+          <li>Urgency: “Hurry”, “Offer ends in 10 minutes”</li>
+          <li>Social proof: “20 people are viewing this”</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Does not catch (yet)</h3>
+        <ul class="plain">
+          <li>Hidden fees added at checkout</li>
+          <li>Pre-ticked boxes and trick buttons</li>
+          <li>Anything that is not text on the page</li>
+        </ul>
+        <p class="note flush">It can also flag harmless text by mistake. Treat a red outline as “look twice,” not proof.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="report" hidden>
+    <h2>Help improve it</h2>
+    <p class="sub">The model learned from about 3,000 English phrases, so it will miss some wording and flag some harmless text. If you spot either, tell me. Reports are reviewed by hand before they are used to retrain the model.</p>
+    <div class="panel">
+      <label for="rtext"><strong>Exact text from the page</strong></label>
+      <input class="field" id="rtext" maxlength="150" placeholder="For example: Just 2 pieces remain at this price">
+      <label for="rkind"><strong>What happened?</strong></label>
+      <select class="field" id="rkind">
+        <option value="missed">The detector missed this</option>
+        <option value="false_alarm">The detector flagged this by mistake</option>
+      </select>
+      <button class="btn main" id="rsend" type="button">Send report</button>
+      <p class="note" id="rmsg" aria-live="polite">Only the text you type is sent. Please leave out personal details.</p>
+      <p class="note flush" id="rcount"></p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Data and how it works</h2>
+    <p class="sub">A TF-IDF and logistic regression model trained on about 3,000 labeled shopping phrases, exported to run directly in the browser.</p>
+    <div class="dl">
+      <a class="btn alt" href="https://github.com/AdithiJRao/dark-pattern-detector">View source on GitHub</a>
+    </div>
+    <details class="first">
+      <summary>The extension doesn’t highlight anything</summary>
+      <p>Open <code>edge://extensions</code> or <code>chrome://extensions</code>, make sure the extension is on and Site access is “On all sites,” then refresh the shopping page. Some pages load text late, so wait a couple of seconds.</p>
+    </details>
+    <details>
+      <summary>Is my browsing data sent anywhere?</summary>
+      <p>No. The extension runs the model inside your browser, and page text never leaves your computer. The only thing this website collects is text you choose to type into the report form above.</p>
+    </details>
+  </section>
+
+  <footer>Built as a student project. Detection is approximate. <a href="privacy.html">Privacy</a></footer>
+</div>
+
+<script>
+/* ---- demo toggle ---- */
+const demo=document.getElementById('demo'),t=document.getElementById('t'),c=document.getElementById('c');
+t.addEventListener('click',()=>{
+  const on=!demo.classList.contains('on');
+  demo.classList.toggle('on',on);
+  t.setAttribute('aria-pressed',on);
+  t.textContent=on?'Detector on':'Detector off';
+  c.textContent=on?'3 pressure tactics flagged':'Nothing flagged. Can you spot them yourself?';
+});
+
+/* ---- report form ----
+   Set API to your server address. Leave it "" and the section stays hidden.
+   Local testing:  const API = "http://127.0.0.1:8000";
+   After deploying: const API = "https://your-api.onrender.com";  (no trailing slash) */
+const API = "";
+
+if (API) {
+  const section = document.getElementById('report');
+  const msg = document.getElementById('rmsg');
+  const count = document.getElementById('rcount');
+  const btn = document.getElementById('rsend');
+  section.hidden = false;
+
+  async function loadCount() {
+    try {
+      const r = await fetch(API + "/stats");
+      const d = await r.json();
+      count.textContent = d.reports === 0 ? "No reports yet. Be the first.": d.reports + (d.reports === 1 ? " phrase" : " phrases") + " reported so far.";
+    } catch (e) {
+      count.textContent = "";
+    }
+  }
+  loadCount();
+
+  btn.addEventListener('click', async () => {
+    const text = document.getElementById('rtext').value.trim();
+    if (text.length < 10) { msg.textContent = "Please type at least 10 characters."; return; }
+    btn.disabled = true;
+    msg.textContent = "Sending… the server may take up to a minute to wake up.";
+    try {
+      const r = await fetch(API + "/report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, kind: document.getElementById('rkind').value }),
+      });
+      if (r.ok) {
+        msg.textContent = "Thanks, your report was sent.";
+        document.getElementById('rtext').value = "";
+        loadCount();
+      } else if (r.status === 429) {
+        msg.textContent = "Too many reports from your network. Please try again later.";
+      } else {
+        msg.textContent = "Could not send. Use 10 to 150 characters and try again.";
+      }
+    } catch (e) {
+      msg.textContent = "The server is unreachable right now. Please try again in a minute.";
+    }
+    btn.disabled = false;
+  });
+}
+</script>
+</body>
+</html>

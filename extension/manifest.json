@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Dark Pattern Detector",
+  "version": "1.0.0",
+  "description": "Highlights manipulative shopping text (fake urgency, scarcity and social proof) with a red outline.",
+  "icons": { "48": "icon48.png", "128": "icon128.png" },
+  "action": { "default_icon": { "48": "icon48.png" } },
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["model.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
