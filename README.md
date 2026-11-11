@@ -140,6 +140,4 @@ The extension reads visible page text to score it. Scoring happens locally. It d
 
 Trained on a dark pattern text dataset from Kaggle (`dp_final_dataset_april_3k.csv`), released under the MIT License. See `model/DATASET_LICENSE.txt`.
 
-## License
 
-Add your own license here (for example MIT) by creating a `LICENSE` file in the repo.
